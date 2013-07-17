@@ -27,6 +27,7 @@ options.set('scm', 'git')
 options.set('application', current_module)
 options.set('repository', "https://github.com/chengdh/%s.git" % current_module)
 options.set('deploy_to','~/addons/')
+options.set('deploy_via','checkout')
 #设置user和runner
 options.set('user','openerp_newline')
 options.set('runner','openerp_newline')
