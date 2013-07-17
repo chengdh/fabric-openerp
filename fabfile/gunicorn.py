@@ -15,6 +15,10 @@ from fabric.context_managers import hide
 #导入gunicon控制
 import fabric_gunicorn as gunicorn
 
+env.hosts = ['120.194.14.9'] 
+env.user = 'openerp_newline'
+env.password = 'openerp'
+
 OPENERP_HOME="/home/openerp_newline/openerp7"
 env.remote_workdir = "%s/openobject-server/" % OPENERP_HOME
 env.gunicorn_wsgi_app = "openerp:service.wsgi_server.application"

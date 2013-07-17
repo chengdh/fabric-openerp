@@ -15,19 +15,14 @@ from fabric.context_managers import hide
 from fabric_deploy import options
 from fabric_deploy.deploy import *
 
-'''
-env.hosts = ['120.194.14.9'] 
-env.user = 'openerp_newline'
-env.password = 'openerp'
-'''
 
 current_module = 'custom_purchase'
 options.set('scm', 'git')
+options.set('deploy_via','checkout')
 #设置当前要更新的module
 options.set('application', current_module)
 options.set('repository', "https://github.com/chengdh/%s.git" % current_module)
-options.set('deploy_to','~/addons/')
-options.set('deploy_via','checkout')
+options.set('deploy_to','~/custom_addons/%s' % current_module)
 #设置user和runner
 options.set('user','openerp_newline')
 options.set('runner','openerp_newline')
@@ -49,3 +44,16 @@ def production():
 def restart():
   pass
 
+@task
+@roles('app', 'web')
+def update_symlink():
+  with settings(warn_only=True):
+    addons_path = "/home/openerp_newline/openerp7/addons"
+    dic =  dict(current_module = current_module,addons_path = addons_path)
+    dic.update(var('latest_release'))
+    result = run('rm -f %(addons_path)s/%(current_module)s && ln -s %(latest_release)s  %(addons_path)s/%(current_module)s' \
+        % dic)
+
+    if result.failed:
+      alert('failed to update symlink. try to rollback.')
+      invoke('rollback')
