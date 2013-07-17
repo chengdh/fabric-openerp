@@ -42,3 +42,9 @@ def production():
   options.set('current_stage', 'production')
   env.roledefs.update({'app': ['120.194.14.9' ] })
   env.roledefs.update({'web': ['120.194.14.9' ] })
+
+@task
+@roles('app')
+def restart():
+  pass
+
