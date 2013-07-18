@@ -16,13 +16,16 @@ from fabric_deploy import options
 from fabric_deploy.deploy import *
 
 
-current_module = 'custom_purchase'
+#目前的自定义模块
+#html_report,custom_purchase,custom_hr_payroll,custom_stock,custom_reports
+
+deploy_module = 'custom_stock'
 options.set('scm', 'git')
 options.set('deploy_via','checkout')
 #设置当前要更新的module
-options.set('application', current_module)
-options.set('repository', "https://github.com/chengdh/%s.git" % current_module)
-options.set('deploy_to','~/custom_addons/%s' % current_module)
+options.set('application', deploy_module)
+options.set('repository', "https://github.com/chengdh/%s.git" % deploy_module)
+options.set('deploy_to','~/custom_addons/%s' % deploy_module)
 #设置user和runner
 options.set('user','openerp_newline')
 options.set('runner','openerp_newline')
@@ -49,9 +52,9 @@ def restart():
 def update_symlink():
   with settings(warn_only=True):
     addons_path = "/home/openerp_newline/openerp7/addons"
-    dic =  dict(current_module = current_module,addons_path = addons_path)
+    dic =  dict(deploy_module = deploy_module,addons_path = addons_path)
     dic.update(var('latest_release'))
-    result = run('rm -f %(addons_path)s/%(current_module)s && ln -s %(latest_release)s  %(addons_path)s/%(current_module)s' \
+    result = run('rm -f %(addons_path)s/%(deploy_module)s && ln -s %(latest_release)s  %(addons_path)s/%(deploy_module)s' \
         % dic)
 
     if result.failed:
