@@ -17,9 +17,9 @@ from fabric_deploy.deploy import *
 
 
 #目前的自定义模块
-#html_report,custom_purchase,custom_hr_payroll,custom_stock,custom_reports
+#html_report,custom_purchase,custom_hr_payroll,custom_stock
 
-deploy_module = 'custom_stock'
+deploy_module = 'custom_reports'
 options.set('scm', 'git')
 options.set('deploy_via','checkout')
 #设置当前要更新的module
