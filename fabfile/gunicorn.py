@@ -15,20 +15,23 @@ from fabric.context_managers import hide
 #导入gunicon控制
 import fabric_gunicorn as gunicorn
 
-env.hosts = ['120.194.14.9'] 
-env.user = 'openerp_newline'
+env.hosts = ['www.nt999.net:2222'] 
+env.user = 'openerp'
 env.password = 'openerp'
 
-OPENERP_HOME="/home/openerp_newline/openerp7"
+OPENERP_HOME="/home/openerp/openerp7"
 env.remote_workdir = "%s/openobject-server/" % OPENERP_HOME
 env.gunicorn_wsgi_app = "openerp:service.wsgi_server.application"
-env.gunicorn_bind = "0.0.0.0:8900"
+env.gunicorn_bind = "0.0.0.0:8069"
 env.gunicorn_workers = 4
 env.errorlog = '%s/logs/gunicorn-error.log' % OPENERP_HOME
 env.accesslog = '%s/logs/gunicorn-access.log' % OPENERP_HOME
 env.loglevel = 'debug'
+env.timout = 5000
 #添加了openerp conf file
 env.openerp_conf = 'newtime-wsgi.py'
+#使用了virtualenv
+env.virtualenv_dir = "OPENERP"
 
 @task
 def start_openerp_server():

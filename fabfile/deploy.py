@@ -17,30 +17,30 @@ from fabric_deploy.deploy import *
 
 
 #目前的自定义模块
-#html_report,custom_purchase,custom_hr_payroll,custom_stock
+#html_report,custom_purchase,custom_hr_payroll,custom_stock,member_management
 
-deploy_module = 'custom_reports'
+deploy_module = 'html_report'
 options.set('scm', 'git')
 options.set('deploy_via','checkout')
 #设置当前要更新的module
 options.set('application', deploy_module)
 options.set('repository', "https://github.com/chengdh/%s.git" % deploy_module)
-options.set('deploy_to','~/custom_addons/%s' % deploy_module)
+options.set('deploy_to','~/openerp7/custom_addons/%s' % deploy_module)
 #设置user和runner
-options.set('user','openerp_newline')
-options.set('runner','openerp_newline')
+options.set('user','openerp')
+options.set('runner','openerp')
 
 @task
 def development():
   options.set('current_stage', 'development')
-  env.roledefs.update({'app': ['120.194.14.9' ] })
-  env.roledefs.update({'web': ['120.194.14.9' ] })
+  env.roledefs.update({'app': ['www.nt999.net:2222' ] })
+  env.roledefs.update({'web': ['www.nt999.net:2222' ] })
 
 @task
 def production():
   options.set('current_stage', 'production')
-  env.roledefs.update({'app': ['120.194.14.9' ] })
-  env.roledefs.update({'web': ['120.194.14.9' ] })
+  env.roledefs.update({'app': ['www.nt999.net:2222' ] })
+  env.roledefs.update({'web': ['www.nt999.net:2222' ] })
 
 @task
 @roles('app')
@@ -51,7 +51,7 @@ def restart():
 @roles('app', 'web')
 def update_symlink():
   with settings(warn_only=True):
-    addons_path = "/home/openerp_newline/openerp7/addons"
+    addons_path = "/home/openerp/openerp7/openobject-addons"
     dic =  dict(deploy_module = deploy_module,addons_path = addons_path)
     dic.update(var('latest_release'))
     result = run('rm -f %(addons_path)s/%(deploy_module)s && ln -s %(latest_release)s  %(addons_path)s/%(deploy_module)s' \
