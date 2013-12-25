@@ -13,7 +13,7 @@ from fabric.utils import abort, puts
 from fabric.context_managers import hide
 
 #导入gunicon控制
-import fabric_gunicorn as gunicorn
+from fabric_gunicorn import *
 
 env.hosts = ['www.nt999.net:2222'] 
 env.user = 'openerp'
@@ -27,7 +27,7 @@ env.gunicorn_workers = 4
 env.errorlog = '%s/logs/gunicorn-error.log' % OPENERP_HOME
 env.accesslog = '%s/logs/gunicorn-access.log' % OPENERP_HOME
 env.loglevel = 'debug'
-env.timout = 5000
+env.timeout = '50000'
 #添加了openerp conf file
 env.openerp_conf = 'newtime-wsgi.py'
 #使用了virtualenv
@@ -79,6 +79,9 @@ def start_openerp_server():
     if 'loglevel' in env:
       options.append('--log-level %s' % env.loglevel)
 
+    if 'timeout' in env:
+      options.append('--timeout %s' % env.timeout)
+
 
     if 'openerp_conf' in env:
       options.append('-c %s%s' % (env.remote_workdir,env.openerp_conf))
@@ -95,4 +98,4 @@ def start_openerp_server():
     else:
       abort(colors.red("Gunicorn wasn't started!"))
 
-gunicorn.start = start_openerp_server
+start = start_openerp_server
