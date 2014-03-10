@@ -14,34 +14,49 @@ from fabric.context_managers import hide
 
 #导入gunicon控制
 from fabric_gunicorn import *
-
+"""
 env.hosts = ['www.nt999.net:2222'] 
 env.user = 'openerp'
 env.password = 'openerp'
+"""
 
-OPENERP_HOME="/home/openerp/openerp7"
-env.remote_workdir = "%s/openobject-server/" % OPENERP_HOME
+OPENERP_HOME="/home/openerp/openerp"
+env.remote_workdir = "%s/openobject-server/current" % OPENERP_HOME
 env.gunicorn_wsgi_app = "openerp:service.wsgi_server.application"
 env.gunicorn_bind = "0.0.0.0:8069"
 env.gunicorn_workers = 4
-env.errorlog = '%s/logs/gunicorn-error.log' % OPENERP_HOME
-env.accesslog = '%s/logs/gunicorn-access.log' % OPENERP_HOME
+env.errorlog = '%s/log/gunicorn-error.log' % env.remote_workdir
+env.accesslog = '%s/log/gunicorn-access.log' % env.remote_workdir
 env.loglevel = 'debug'
 env.timeout = '50000'
 #添加了openerp conf file
-env.openerp_conf = 'newtime-wsgi.py'
 #使用了virtualenv
-env.virtualenv_dir = "OPENERP"
+env.virtualenv_dir = "%s/openobject-server/shared/virtualenv"% OPENERP_HOME
+env.gunicorn_pidpath = "%s/openobject-server/shared/pids/gunicorn.pid"% OPENERP_HOME
 
 @task
-def start_openerp_server():
+def linode():
+  env.hosts = ['ssapp.co'] 
+  env.user = 'openerp'
+  env.password = 'openerp'
+  env.openerp_conf = 'linode-wsgi.py'
+
+@task
+def nt999():
+  env.hosts = ['www.nt999.net:2222'] 
+  env.user = 'openerp'
+  env.password = 'openerp'
+  env.openerp_conf = 'newtime-wsgi.py'
+
+@task
+def start_oe():
   '''
   启动openerp server
   重写fabric_gunicorn中的start
   '''
-  gunicorn.set_env_defaults()
+  set_env_defaults()
 
-  if gunicorn.gunicorn_running():
+  if gunicorn_running():
     puts(colors.red("Gunicorn is already running!"))
     return
 
@@ -84,7 +99,7 @@ def start_openerp_server():
 
 
     if 'openerp_conf' in env:
-      options.append('-c %s%s' % (env.remote_workdir,env.openerp_conf))
+      options.append('-c %s' % env.openerp_conf)
 
     options_string = ' '.join(options)
 
@@ -93,9 +108,9 @@ def start_openerp_server():
     else:
       run('%s gunicorn %s %s' % (prefix_string, options_string,env.gunicorn_wsgi_app))
 
-    if gunicorn.gunicorn_running():
+    if gunicorn_running():
       puts(colors.green("Gunicorn started."))
     else:
       abort(colors.red("Gunicorn wasn't started!"))
 
-start = start_openerp_server
+start = start_oe

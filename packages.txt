@@ -1,1 +1,39 @@
-unittest2==0.5.1
+# This file collects all required third-party applications that are needed
+# to run this project. Later you can install all these apps in a row
+# using pip. Example:
+#
+# pip install -r requirements.txt
+#
+# Notes:
+# -This is only a python packages necesary, I asume you have installed and configured postgres and apache
+# -It's probable you will need install: libpq-dev python-dev libxml2-dev libxslt-dev
+Fabric
+
+#pychart not on pypi, use: pip install http://download.gna.org/pychart/PyChart-1.39.tar.gz
+http://download.gna.org/pychart/PyChart-1.39.tar.gz
+babel
+docutils
+feedparser
+gdata
+Jinja2
+lxml 
+mako
+mock
+PIL 
+psutil 
+psycopg2 >= 2.2
+pydot
+python-dateutil < 2
+python-ldap 
+python-openid
+pytz
+pywebdav
+pyyaml
+reportlab 
+simplejson
+unittest2
+vatnumber
+vobject
+werkzeug
+#xlwt
+gunicorn

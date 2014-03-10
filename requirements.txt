@@ -1,2 +1,37 @@
+# This file collects all required third-party applications that are needed
+# to run this project. Later you can install all these apps in a row
+# using pip. Example:
+#
+# pip install -r requirements.txt
+#
+# Notes:
+# -This is only a python packages necesary, I asume you have installed and configured postgres and apache
+# -It's probable you will need install: libpq-dev python-dev libxml2-dev libxslt-dev
 Fabric
 Jinja2
+
+pychart # not on pypi, use: pip install http://download.gna.org/pychart/PyChart-1.39.tar.gz
+babel
+docutils
+feedparser
+gdata
+lxml # windows binary http://www.lfd.uci.edu/~gohlke/pythonlibs/
+mako
+mock
+PIL # windows binary http://www.lfd.uci.edu/~gohlke/pythonlibs/
+psutil # windows binary code.google.com/p/psutil/downloads/list
+psycopg2 >= 2.2
+pydot
+python-dateutil < 2
+python-ldap # optional
+python-openid
+pytz
+pywebdavNo module named setuptools
+pyyaml
+reportlab # windows binary pypi.python.org/pypi/reportlab
+simplejson
+unittest2
+vatnumber
+vobject
+werkzeug
+xlwt

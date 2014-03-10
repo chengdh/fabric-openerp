@@ -21,45 +21,72 @@ def development():
   options.set('current_stage', 'development')
   env.roledefs.update({'app': ['www.nt999.net:2222' ] })
   env.roledefs.update({'web': ['www.nt999.net:2222' ] })
+  #设置user和runner
+  options.set('user','openerp')
+  options.set('runner','openerp')
+
 
 @task
 def production():
   options.set('current_stage', 'production')
   env.roledefs.update({'app': ['www.nt999.net:2222' ] })
   env.roledefs.update({'web': ['www.nt999.net:2222' ] })
+  #设置user和runner
+  options.set('user','openerp')
+  options.set('runner','openerp')
+
 
 @task
 def linode():
   options.set('current_stage', 'production')
   env.roledefs.update({'app': ['ssapp.co']})
   env.roledefs.update({'web': ['ssapp.co']})
+  #设置user和runner
+  options.set('user','openerp')
+  options.set('runner','openerp')
+
 
 #部署openobject-addons
 @task
 def addons():
   application = 'openobject-addons'
+  options.set('scm','bzr')
+  options.set('virtualenv',None)
   options.set('local_project_path','/Users/chengdh/myproject/openerp7.0/openobject-addons')
-  options.set('application', applicatioin)
+  options.set('application', application)
   options.set('deploy_to','~/openerp/%s' % application )
 
 #部署openerp-web
 @task
-def addons():
+def web():
   application = 'openerp-web'
-  options.set('application', applicatioin)
+  options.set('scm','bzr')
+  options.set('virtualenv',None)
+  options.set('application', application)
   options.set('local_project_path','/Users/chengdh/myproject/openerp7.0/openerp-web')
   options.set('deploy_to','~/openerp/%s' % application )
 
 @task
 def server():
   application = 'openobject-server'
-  options.set('application', applicatioin)
+  options.set('scm','bzr')
+  options.set('application', application)
   options.set('local_project_path','/Users/chengdh/myproject/openerp7.0/openobject-server')
   options.set('deploy_to','~/openerp/%s' % application )
 
+@task
+def custome_addons():
+  application = 'custom-addons'
+  options.set('virtualenv',None)
+  options.set('scm','git')
+  options.set('application', application)
+  options.set('local_project_path','/Users/chengdh/myproject/openerp7.0/other_addons')
+  options.set('deploy_to','~/openerp/%s' % application )
+
+
 #部署custom_addons/:module
 @task
-def custom_addons():
+def custom_addons_git():
   #目前的自定义模块
   #html_report,custom_purchase,custom_hr_payroll,custom_stock,member_management,ktv_sale_refactor
 
