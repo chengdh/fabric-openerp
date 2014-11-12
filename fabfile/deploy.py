@@ -19,8 +19,8 @@ from fabric_deploy.deploy import *
 @task
 def development():
   options.set('current_stage', 'development')
-  env.roledefs.update({'app': ['www.nt999.net:2222' ] })
-  env.roledefs.update({'web': ['www.nt999.net:2222' ] })
+  env.roledefs.update({'app': ['erp.nt999.net:2222' ] })
+  env.roledefs.update({'web': ['erp.nt999.net:2222' ] })
   #设置user和runner
   options.set('user','openerp')
   options.set('runner','openerp')
@@ -29,8 +29,8 @@ def development():
 @task
 def production():
   options.set('current_stage', 'production')
-  env.roledefs.update({'app': ['www.nt999.net:2222' ] })
-  env.roledefs.update({'web': ['www.nt999.net:2222' ] })
+  env.roledefs.update({'app': ['erp.nt999.net:2222' ] })
+  env.roledefs.update({'web': ['erp.nt999.net:2222' ] })
   #设置user和runner
   options.set('user','openerp')
   options.set('runner','openerp')

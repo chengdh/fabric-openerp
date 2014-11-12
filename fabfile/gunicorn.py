@@ -43,7 +43,7 @@ def linode():
 
 @task
 def nt999():
-  env.hosts = ['www.nt999.net:2222'] 
+  env.hosts = ['219.154.46.168:2222'] 
   env.user = 'openerp'
   env.password = 'openerp'
   env.openerp_conf = 'newtime-wsgi.py'
